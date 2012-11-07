@@ -1,6 +1,6 @@
-#library("StringTests");
-#import("../DUnit.dart");
-#import("../Mixin.dart");
+library StringTests;
+import "DUnit.dart";
+import "../lib/mixin.dart";
 
 StringTests(){
   
@@ -61,7 +61,7 @@ StringTests(){
     equal($('the dasherize string method').dasherize(), 'the-dasherize-string-method', 'can dasherize lower case words');
     equal($('the  dasherize string method  ').dasherize(), 'the-dasherize-string-method', 'can dasherize spaced words');
     equal($('téléphone').dasherize(), 'téléphone', 'can dasherize i18n words');
-    equal($(@'foo$bar').dasherize(), @'foo$bar', 'dasherize leaves special chars');
+    equal($(r'foo$bar').dasherize(), r'foo$bar', 'dasherize leaves special chars');
     equal($("123").dasherize(), '123', 'dasherize leaves numbers');
   });
 
@@ -131,7 +131,7 @@ StringTests(){
   
   test('Strings: stripTags', () {
     equal($('a <a href="#">link</a>').stripTags(), 'a link', 'can strip link');
-    equal($('a <a href="#">link</a><script>alert("hello world!")</scr'+'ipt>').stripTags(), 'a linkalert("hello world!")', 'can strip link with js');
+    equal($('a <a href="#">link</a><script>alert("hello world!")</script>').stripTags(), 'a linkalert("hello world!")', 'can strip link with js');
     equal($('<html><body>hello world</body></html>').stripTags(), 'hello world', 'can strip html');
     equal($('123').stripTags(), '123', 'leaves number');
   });

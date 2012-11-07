@@ -1,7 +1,7 @@
-#library("ArrayTests");
-#import("dart:json");
-#import("../DUnit.dart");
-#import("../Mixin.dart");
+library ArrayTests;
+import "dart:json";
+import "DUnit.dart";
+import "../lib/mixin.dart";
 
 ArrayTests() {
 

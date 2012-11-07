@@ -1,6 +1,7 @@
-#library("UtilityTests");
-#import("../DUnit.dart");
-#import("../Mixin.dart");
+library UtilityTests;
+
+import "DUnit.dart";
+import "../lib/mixin.dart";
 
 UtilityTests() {
 

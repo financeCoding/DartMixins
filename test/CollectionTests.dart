@@ -1,6 +1,6 @@
-#library("CollectionTests");
-#import("../DUnit.dart");
-#import("../Mixin.dart");
+library CollectionTests;
+import "DUnit.dart";
+import "../lib/Mixin.dart";
 
 CollectionTests() {
 
@@ -82,7 +82,7 @@ CollectionTests() {
     var ifnull;
     try {
       $(null).reduce((x,y){});
-    } catch (final ex) {
+    } catch (ex) {
       ifnull = ex;
     }
     ok(ifnull is TypeError$, 'handles a null (without inital value) properly');
@@ -98,19 +98,19 @@ CollectionTests() {
   });
 
   test('collections: reduceRight', () {
-    var list = $(["foo", "bar", "baz"]).reduceRight((memo, str) => memo + str, '');
+    var list = $(["foo", "bar", "baz"]).reduceRight((memo, str) => "$memo$str", '');
     equal(list, 'bazbarfoo', 'can perform right folds');
 
-    list = $(["foo", "bar", "baz"]).foldr((memo, str) => memo + str, '');
+    list = $(["foo", "bar", "baz"]).foldr((memo, str) => "$memo$str", '');
     equal(list, 'bazbarfoo', 'aliased as "foldr"');
 
-    list = $(["foo", "bar", "baz"]).foldr((memo, str) => memo + str);
+    list = $(["foo", "bar", "baz"]).foldr((memo, str) => "$memo$str");
     equal(list, 'bazbarfoo', 'default initial value');
 
     var ifnull;
     try {
       $(null).reduceRight((x,y){});
-    } catch (final ex) {
+    } catch (ex) {
       ifnull = ex;
     }
     ok(ifnull is TypeError$, 'handles a null (without inital value) properly');
@@ -234,8 +234,8 @@ CollectionTests() {
     equal(double.INFINITY, $({}).min(), 'Minimum value of an empty object');
     equal(double.INFINITY, $([]).min(), 'Minimum value of an empty array');
 
-    Date now = new Date.fromEpoch(9999999999, new TimeZone.utc());
-    Date then = new Date.fromEpoch(0, new TimeZone.utc());
+    Date now = new Date.fromMillisecondsSinceEpoch(9999999999);
+    Date then = new Date.fromMillisecondsSinceEpoch(0);
     equal($([now, then]).min(), then, 'can perform min on date');
   });
 

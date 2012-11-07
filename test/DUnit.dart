@@ -20,9 +20,9 @@ List<Assertion> _testAssertions;
 equal(actual, expected, msg) =>
   _testAssertions.add(new Assertion(actual,expected,msg));
 deepEqual(actual, expected, msg) =>
-    _testAssertions.add(new Assertion(actual,expected,msg,deepEqual:true));
+    _testAssertions.add(new Assertion(actual,expected,msg, true));
 strictEqual(actual, expected, msg) =>
-    _testAssertions.add(new Assertion(actual,expected,msg,strictEqual:true));
+    _testAssertions.add(new Assertion(actual,expected,msg, false, true));
 ok(actual, msg) =>
   _testAssertions.add(new Assertion(actual,true,msg));
 
@@ -31,7 +31,7 @@ raises(actualFn, expectedTypeFn, msg) {
     var actual = actualFn();
     _testAssertions.add(new Assertion(actual,"expected error",msg));
   }
-  catch (final e) {
+  catch (e) {
     if (expectedTypeFn(e)) 
       _testAssertions.add(new Assertion(true,true,msg));
     else
@@ -43,11 +43,13 @@ runAllTests([bool hidePassedTests=false]){
   int totalTests = 0;
   int totalPassed = 0;
   int totalFailed = 0;
-  Stopwatch sw = new Stopwatch.start();
-  for (String moduleName in _moduleTests.getKeys()) {
+  
+  Stopwatch sw = new Stopwatch();
+  sw.start();
+  for (String moduleName in _moduleTests.keys) {
     int testNo = 0;
     Map<String,Function> moduleTests = _moduleTests[moduleName];
-    for (String testName in moduleTests.getKeys()) {
+    for (String testName in moduleTests.keys) {
       testNo++;
       _testAssertions = new List<Assertion>();
       String error = null;
@@ -86,7 +88,7 @@ runAllTests([bool hidePassedTests=false]){
     if (!hidePassedTests) print("");
   }
     
-  print("\nTests completed in ${sw.elapsedInMs()}ms");
+  print("\nTests completed in ${sw.elapsedMilliseconds}ms");
   print("$totalTests tests of $totalPassed passed, $totalFailed failed.");
 }
 
@@ -103,7 +105,7 @@ class Assertion {
 
     if (actual is Map) {
       if (expected is! Map) return false;
-      for (var key in actual.getKeys()) 
+      for (var key in actual.keys) 
         if (actual[key] != expected[key]) return false;
       return true; 
     }
